@@ -99,13 +99,16 @@ while($objResult = mysql_fetch_array($objQuery))
     				$sel_partners = mysql_query("SELECT * FROM partners WHERE `PartnersID` = '".$objResult["PartnersID"]."'") or die (mysql_error());
     				$partnersResult = mysql_fetch_array($sel_partners);
 
+            $sel_oder = mysql_query("SELECT * FROM oder WHERE `OderID` = '".$objResult["OderID"]."'") or die (mysql_error());
+            $oderResult = mysql_fetch_array($sel_oder);
+
     				$sel_site = mysql_query("SELECT * FROM site WHERE `SiteCode` = '".$objResult["SiteCode"]."'") or die (mysql_error());
     				$siteResult = mysql_fetch_array($sel_site);
 
-    				$sel_sitetype = mysql_query("SELECT * FROM sitetype WHERE `SiteTypeID` = '".$siteResult["SiteTypeID"]."'") or die (mysql_error());
+    				$sel_sitetype = mysql_query("SELECT * FROM sitetype WHERE `SiteTypeID` = '".$oderResult["SiteTypeID"]."'") or die (mysql_error());
     				$sitetypeResult = mysql_fetch_array($sel_sitetype);
 
-    				$sel_emp = mysql_query("SELECT * FROM employee WHERE `EmID` = '".$siteResult["EmID"]."'") or die (mysql_error());
+    				$sel_emp = mysql_query("SELECT * FROM employee WHERE `EmID` = '".$oderResult["EmpID"]."'") or die (mysql_error());
     				$empResult = mysql_fetch_array($sel_emp);
     			?>
     			<td><?php echo $objResult["PartnersID"] ; ?></td>

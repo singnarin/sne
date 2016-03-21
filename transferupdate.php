@@ -42,7 +42,7 @@ $transferResult = mysql_fetch_array($transferSelect);
   	<td></td>
   </tr>
   <tr>
-    <td><div align="center">เพิ่มรายการโอนเงิน</div></td>
+    <td><div align="center">แก้ไขรายการโอนเงิน</div></td>
   </tr>
   <tr>
     <td><div align="center">
@@ -77,7 +77,7 @@ $transferResult = mysql_fetch_array($transferSelect);
         </tr>
     	<tr>
           <td>ยอด</td>
-          <td><input type="text" name="txtDraw" id="txtDraw" readonly="readonly" value="<?php echo $drawResult['Draw']; ?>"></td>
+          <td><input type="text" name="txtDraw" id="txtDraw"  value="<?php echo $drawResult['Draw']; ?>"></td>
     	</tr>
 	<tr>
 	<tr>

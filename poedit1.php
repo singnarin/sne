@@ -48,20 +48,18 @@ $objQuery = mysql_query("SELECT * FROM po WHERE `poDate` BETWEEN '".$nbeginDate.
     			<th> <div align="center">วันที่</div></th>
          		<th> <div align="center">กำกับ</div></th>
          		<th> <div align="center">ยอดใบกำกับ</div></th>
-    			<th> <div align="center">ใบเสร็จ</div></th>
+    			  <th> <div align="center">ใบเสร็จ</div></th>
          		<th> <div align="center">ยอดใบเสร็จ</div></th>
-         		<th> <div align="center">วันที่ Matt</div></th>
          		<th> <div align="center">ยอด Matt</div></th>
-         		<th> <div align="center">วันที่ Service</div></th>
          		<th> <div align="center">ยอด Service</div></th>
          		<th> <div align="center">ชื่อคู่ค้า</div></th>
          		<th> <div align="center">ยอด</div></th>
+            <th> <div align="center">วางค่า</div></th>
          		<th> <div align="center">หมายเหตุ</div></th> 
          		<th> <div align="center">SiteCode</div></th>     
          		<th> <div align="center">SiteName</div></th>
          		<th> <div align="center">ประเภทไซต์</div></th>	
          		<th> <div align="center">พนักงาน</div></th>
-         		<th> <div align="center">วางค่า</div></th>
          		</tr>
 <?php
 while($objResult = mysql_fetch_array($objQuery))
@@ -71,10 +69,9 @@ while($objResult = mysql_fetch_array($objQuery))
 
     $sel_draw = mysql_query("SELECT * FROM drawmoney WHERE `poID` = '".$objResult["poID"]."'") or die (mysql_error());
     $numRow = mysql_num_rows($sel_draw);
-    $num = $numRow+1;
+    $num = $numRow +1;
 ?>
   			<tr>
-<!--  				<td rowspan="<?php echo $num ; ?>"><a href="podel.php?poID=<?php echo $objResult["poID"];?>" target = "_blank"><img src = "images/no.jpg"></a></td>-->
     			<td rowspan="<?php echo $num ; ?>"><div align="center">
     			<?php echo $objResult["poID"];?> 
           		<td rowspan="<?php echo $num ; ?>">
@@ -84,33 +81,19 @@ while($objResult = mysql_fetch_array($objQuery))
 				  	$month2 = $date2['1'];
 				  	$day2 = $date2['0'];
 				 	$nDate2 = $year2 . "-" . $month2. "-" . $day2 ;
-
-				 	$date3 = explode("-",$objResult["MattDate"]);
-				  	$year3 = $date3['2'];
-				  	$month3 = $date3['1'];
-				  	$day3 = $date3['0'];
-				 	$nMattDate = $year3 . "-" . $month3. "-" . $day3 ;
-
-				 	$date4 = explode("-",$objResult["ServiceDate"]);
-				  	$year4 = $date4['2'];
-				  	$month4 = $date4['1'];
-				  	$day4 = $date4['0'];
-				 	$nServiceDate = $year4 . "-" . $month4. "-" . $day4 ;
-
     				echo $nDate2 ; 
     			?>
     			<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["NoIn"] ; ?></td>
     			<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["NoInNum"] ; ?></td>
-            	<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["TaxIn"] ; ?></td>
-            	<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["TaxInNum"] ; ?></td>
-            	<td rowspan="<?php echo $num ; ?>"><?php echo $nMattDate ; ?></td>
-            	<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["Matt"] ; ?></td>
-            	<td rowspan="<?php echo $num ; ?>"><?php echo $nServiceDate ; ?></td>
-            	<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["Service"] ; ?></td>
-            	<td rowspan="<?php echo $num ; ?>"><?php echo $partnersResult["PartnersName"] ; ?></td>
+          <td rowspan="<?php echo $num ; ?>"><?php echo $objResult["TaxIn"] ; ?></td>
+          <td rowspan="<?php echo $num ; ?>"><?php echo $objResult["TaxInNum"] ; ?></td>
+          <td rowspan="<?php echo $num ; ?>"><?php echo $objResult["Matt"] ; ?></td>
+          <td rowspan="<?php echo $num ; ?>"><?php echo $objResult["Service"] ; ?></td>
+          <td rowspan="<?php echo $num ; ?>"><?php echo $partnersResult["PartnersName"] ; ?></td>
     			<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["po"] ; ?></td>
+          <td><?php echo $objResult["project"] ; ?></td>
     			<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["poNote"] ; ?></td>
-    		</tr>
+    		
           			<?php
             			$poTax = $objResult["po"] * 7 / 100 ;
             			$sumpo = $poTax + $objResult["po"] ;
@@ -142,7 +125,6 @@ while($objResult = mysql_fetch_array($objQuery))
 				<td><?php echo $siteResult["SiteName"] ; ?></td>
 				<td><?php echo $sitetypeResult["SiteTypeName"] ; ?></td>
 				<td><?php echo $empResult["EmName"] ; ?></td>
-				<td><?php echo $expensesResult["ExpensesName"] ; ?></td>
   			</tr>
 		<?php
 }			}

@@ -5,6 +5,7 @@ include("include/connect.php");
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <title>SNE Management System</title>
 <?php 
 include("cssmenu/head.php"); 
@@ -84,7 +85,7 @@ include("include/calenda.php");
 		  <input type="text" name="txtOderID" id="txtOderID" readonly="readonly" />
 		  <INPUT TYPE="BUTTON" NAME="btnPopup_1"  ID="btnPopup_0" VALUE="..." OnClick="OpenPopup()"></td>
         </tr>
-        <tr>
+<!--        <tr>
           <td>ไซต์</td>
           <td>
 		  <input type="text" name="txtSiteCode" id="txtSiteCode" readonly="readonly" />
@@ -93,7 +94,7 @@ include("include/calenda.php");
           <input type="hidden" name="txtempID" id="txtempID" readonly="readonly" />
 		  <INPUT TYPE="BUTTON" NAME="btnPopup_1"  ID="btnPopup_0" VALUE="..." OnClick="OpenPopup2()"></td>
         </tr>
-		<tr>
+-->		<tr>
           <td>หมายเหตุ</td>
           <td><textarea name="txtNote"></textarea></td>
 		</tr>

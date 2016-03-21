@@ -23,21 +23,32 @@ $nDrawDate = $year . "-" . $month . "-" . $day ;
 
 $nDrawTax = $Draw * $DrawTax / 100 ;
 
-$sql_add = "insert into drawmoney(DrawID, DrawDate, SentAt, ExpensesID, Draw, DrawTax, DrawNote) 
-						values ('".$DrawID."', '".$nDrawDate."', '".$SentAt."', '".$ExpensesID."', '".$Draw."', '".$nDrawTax."', '".$DrawNote."')";
-mysql_query($sql_add) or die(mysql_error());
 
 for($i=1;$i<=(int)$_POST["hdnMaxLine"];$i++)
 {
 	if($_POST["txtSiteCode_".$i] != "" )
 		{   
-			$sql_add2 = "insert into site_draw(DrawID, SiteCode, SiteTypeID, empID) values ('".$DrawID."', '".$_POST['txtSiteCode_'.$i]."', '".$_POST['txtSiteType_'.$i]."', '".$_POST['txtempID_'.$i]."')";
-			mysql_query($sql_add2) or die(mysql_error());
+			$check_log = mysql_query("SELECT * FROM site_draw WHERE site_drawID = '".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."'");
+			$num = mysql_num_rows($check_log);
+			$data = mysql_fetch_array($check_log);
+			if ($num > 0 && empty($data["DrawID"])) {
+				echo "update";
+			}
+			if ($num > 0 && $data["DrawID"] != "") {
+				$message = "SiteCode" . $_POST['txtSiteCode_'.$i]. "SiteTypeID" .$_POST['txtSiteType_'.$i] . "ซ้ำ";
+				echo "<script type='text/javascript'>alert('$message');</script>";
+			}
+			if ($num == 0 && $data["DrawID"] == "") {
+				$sql_add2 = "insert into site_draw(site_drawID, DrawID, SiteCode, SiteTypeID, empID) values ('".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."', '".$DrawID."', '".$_POST['txtSiteCode_'.$i]."', '".$_POST['txtSiteType_'.$i]."', '".$_POST['txtempID_'.$i]."')";
+				mysql_query($sql_add2) or die(mysql_error());
+			}
 		}
 }
 
-
-$message = "เพิ่มข้อมูลสำเร็จแล้ว";
+$sql_add = "insert into drawmoney(DrawID, DrawDate, SentAt, ExpensesID, Draw, DrawTax, DrawNote) 
+			values ('".$DrawID."', '".$nDrawDate."', '".$SentAt."', '".$ExpensesID."', '".$Draw."', '".$nDrawTax."', '".$DrawNote."')";
+mysql_query($sql_add) or die(mysql_error());
+	$message = "เพิ่มข้อมูลสำเร็จแล้ว";
 	echo "<script type='text/javascript'>alert('$message');</script>";
 	echo "<meta http-equiv='refresh' content='0;URL=drawadd.php'>";
 

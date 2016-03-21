@@ -103,14 +103,14 @@ while($objResult = mysql_fetch_array($objQuery))
 
     			?>
     			<td rowspan="<?php echo $num;?>"><?php echo $ExpensesResult["ExpensesName"] ; ?></td>
-          		<td rowspan="<?php echo $num;?>"><?php echo $objResult["SentAt"] ; ?></td>
+          <td rowspan="<?php echo $num;?>"><?php echo $objResult["SentAt"] ; ?></td>
     			<td rowspan="<?php echo $num;?>"><?php echo $objResult["Draw"] ; ?></td>
     			<td rowspan="<?php echo $num;?>"><?php echo $objResult["DrawTax"] ; ?></td>
           <?php
             $nDraw = $objResult["Draw"] - $objResult["DrawTax"];
           ?>
     			<td rowspan="<?php echo $num;?>"><?php echo $nDraw ; ?></td>
-          		<td rowspan="<?php echo $num;?>">
+          <td rowspan="<?php echo $num;?>">
           <?php 
 			if($objResult['postatus']>0){
 				echo $objResult["poID"];

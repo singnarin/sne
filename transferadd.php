@@ -77,7 +77,7 @@ include("include/calenda.php");
         </tr>
     	<tr>
           <td>ยอด</td>
-          <td><input type="text" name="txtDraw" id="txtDraw" readonly="readonly"></td>
+          <td><input type="text" name="txtDraw" id="txtDraw" ></td>
     	</tr>
     	<tr>
           <td>ชื่อผู้ค้า</td>
