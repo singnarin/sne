@@ -14,6 +14,9 @@ $Pay = $_POST['txtPay'];
 $Transfer = $_POST['txtTransfer'];
 $Fee = $_POST['txtFee'];
 $TransferNote = $_POST['txtNote'];
+$PartnersID = $_POST['txtPartnersID'];
+$Draw = $_POST['txtDraw'];
+$ExpensesID = $_POST['txtExpensesID'];
 
 $date = explode("-",$TransferDate);
 $year = $date['2'];
@@ -27,6 +30,9 @@ mysql_query("UPDATE `transfer` SET
 	`Pay` = '".$Pay."',
 	`Transfer` = '".$Transfer."', 
 	`Fee` = '".$Fee."', 
+	`PartnersID` = '".$PartnersID."',
+	`Draw` = '".$Draw."',
+	`ExpensesID` = '".$ExpensesID."',
 	`TransferNote` = '".$TransferNote."'
 	WHERE `TransferID` = '".$TransferID."';") or die(mysql_error());
 

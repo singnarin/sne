@@ -114,7 +114,7 @@ while($objResult = mysql_fetch_array($objQuery))
            			<?php 
 						if($objResult['transtatus']>0){
 								$sel_transfer = mysql_query("SELECT * FROM transfer WHERE `DrawID` = '".$objResult["DrawID"]."'") or die (mysql_error());
-           						$transferResult = mysql_fetch_array($sel_transfer);
+           			$transferResult = mysql_fetch_array($sel_transfer);
 								echo $transferResult["TransferDate"];
 						}else{
 								echo "<img src='images/no.jpg'>";

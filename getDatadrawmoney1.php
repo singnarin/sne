@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <script language="javascript">
-	function selData(DrawID, Draw, ExpensesID)
+	function selData(DrawID, Draw, ExpensesID, ExpensesName)
 	{
 		var sDrawID = self.opener.document.getElementById("txtDrawID");
 		sDrawID.value = DrawID;
@@ -12,6 +12,8 @@
 		sDraw.value = Draw;
 		var sExpensesID = self.opener.document.getElementById("txtExpensesID");
 		sExpensesID.value = ExpensesID;
+		var sExpensesName = self.opener.document.getElementById("txtExpensesName");
+		sExpensesName.value = ExpensesName;
 		window.close();
 	}
 	
@@ -58,9 +60,13 @@ $objQuery1 = mysql_query("select * from drawmoney where DrawID = '".$objResult["
 $objResult1 = mysql_fetch_array($objQuery1);
 ?>
     <td><div align="center"><a href="#" OnClick="selData('<?php echo $objResult["DrawID"];?>',
-														 '<?php echo $objResult1["Draw"];?>'),
-														 '<?php echo $objResult1["ExpensesID"];?>')
-														 ;">
+    													 '<?php echo $objResult["Draw"];?>',
+														 '<?php echo $objResult1["ExpensesID"];?>',
+														 '<?php 
+														 $sel_expenses = mysql_query("select * from expenses where ExpensesID = '".$objResult["ExpensesID"]."'") or die ("Error Query");
+														 $expensesResult = mysql_fetch_array($sel_expenses);
+														 echo $expensesResult["ExpensesName"];?>'
+														 );">
 	<?php echo $objResult["DrawID"];?>
 	</a></div></td>
     <td><?php echo $objResult1["Draw"];?></td>

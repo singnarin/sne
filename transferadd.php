@@ -22,6 +22,10 @@ include("include/calenda.php");
  	 {
    		window.open('getDataPartners.php','myPopup','width=650,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
   	}
+      function OpenPopup1()
+  {
+    window.open('getDataExpenses.php','myPopup','width=650,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
+  }
 
 </script>
 
@@ -80,6 +84,12 @@ include("include/calenda.php");
           <td>ยอด</td>
           <td><input type="text" name="txtDraw" id="txtDraw" ></td>
     	</tr>
+      <tr>
+          <td>ค่าใช้จ่าย</td>
+          <td><input type="hidden" name="txtExpensesID" id="txtExpensesID" >
+              <input type="text" name="txtExpensesName" id="txtExpensesName" readonly="readonly" />
+              <INPUT TYPE="BUTTON" NAME="btnPopup_1"  ID="btnPopup_0" VALUE="..." OnClick="OpenPopup1()"></td>
+      </tr>
     	<tr>
           <td>ชื่อผู้ค้า</td>
           <td colspan="3"><input type="hidden" name="txtPartnersID" id="txtPartnersID" readonly="readonly" />

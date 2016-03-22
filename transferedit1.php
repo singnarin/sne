@@ -61,83 +61,73 @@ $objQuery = mysql_query($strSQL) or die (mysql_error());
     			<th> <div align="center">ลำดับที่โอน</div></th>
     			<th> <div align="center">วันที่เบิก</div></th>
     			<th> <div align="center">วันที่โอน</div></th>
-          		<th> <div align="center">ใบสำคัญจ่าย</div></th>
+          <th> <div align="center">ใบสำคัญจ่าย</div></th>
     			<th> <div align="center">ค่าใช้จ่าย</div></th>
-
     			<th> <div align="center">ยอดเบิก</div></th>
-
-          		<th> <div align="center">หัก</div></th>
-         		<th> <div align="center">ยอดโอน</div></th>
+          <th> <div align="center">หัก</div></th>
+         	<th> <div align="center">ยอดโอน</div></th>
     			<th> <div align="center">ค่าธรรมเนียม</div></th>
-
     			<th> <div align="center">เลขที่เบิก</div></th>
     			<th> <div align="center">คู่ค้า</div></th>
+          <th> <div align="center">หมายเหตุ</div></th>
     			<th> <div align="center">พนักงาน</div></th>
-
-          		<th> <div align="center">ประเภทไซต์</div></th>
-          		<th> <div align="center">หมายเหตุ</div></th>
+          <th> <div align="center">ประเภทไซต์</div></th>
   			</tr>
 <?php
 while($objResult = mysql_fetch_array($objQuery))
 {
+  $sel_siteDraw = mysql_query("SELECT * FROM site_draw WHERE DrawID = '".$objResult["DrawID"]."'") or die (mysql_error());
+  $num = mysql_num_rows($sel_siteDraw) + 1;
 ?>
   			<tr>
-  				<td><a href="deltransfer.php?TransferID=<?php echo $objResult["TransferID"];?>" target = "_blank" onclick="window.reload();"><img src = "images/no.jpg"></a></td>
-    			<td><div align="center"><a href="transferupdate.php?TransferID=<?php echo $objResult["TransferID"] ; ?>" target = "_blank"><?php echo $objResult["TransferID"];?> </a></div></td>
+  				<td rowspan="<?php echo $num;?>"><a href="deltransfer.php?TransferID=<?php echo $objResult["TransferID"];?>" target = "_blank" onclick="window.reload();"><img src = "images/no.jpg"></a></td>
+    			<td rowspan="<?php echo $num;?>"><div align="center"><a href="transferupdate.php?TransferID=<?php echo $objResult["TransferID"] ; ?>" target = "_blank"><?php echo $objResult["TransferID"];?> </a></div></td>
     	<?php 
-				$sel_draw = mysql_query("SELECT * FROM drawmoney WHERE `DrawID` = '".$objResult["DrawID"]."'") or die (mysql_error());
+
+				      $sel_draw = mysql_query("SELECT * FROM drawmoney WHERE `DrawID` = '".$objResult["DrawID"]."'") or die (mysql_error());
             	$drawResult = mysql_fetch_array($sel_draw);
 
-            	$sel_emp = mysql_query("SELECT * FROM employee WHERE `EmID` = '".$drawResult["empID"]."'") or die (mysql_error());
-            	$empResult = mysql_fetch_array($sel_emp);
-
-            	$sel_Expenses = mysql_query("SELECT * FROM expenses WHERE `ExpensesID` = '".$drawResult["ExpensesID"]."'") or die (mysql_error());
-    			$ExpensesResult = mysql_fetch_array($sel_Expenses);
-
-    			$sel_site = mysql_query("SELECT * FROM site WHERE `SiteCode` = '".$drawResult["SiteCode"]."'") or die (mysql_error());
-            	$siteResult = mysql_fetch_array($sel_site);
-
-    			$sel_sitetype = mysql_query("SELECT * FROM sitetype WHERE `SiteTypeID` = '".$siteResult["SiteTypeID"]."'") or die (mysql_error());
-            	$sitetypeResult = mysql_fetch_array($sel_sitetype);
+            	$sel_Expenses = mysql_query("SELECT * FROM expenses WHERE `ExpensesID` = '".$objResult["ExpensesID"]."'") or die (mysql_error());
+    			    $ExpensesResult = mysql_fetch_array($sel_Expenses);
 
             	$sel_partners = mysql_query("SELECT * FROM partners WHERE `PartnersID` = '".$objResult["PartnersID"]."'") or die (mysql_error());
             	$partnersResult = mysql_fetch_array($sel_partners);
 
-    			$date2 = explode("-",$objResult["TransferDate"]);
+    		$date2 = explode("-",$objResult["TransferDate"]);
 				$year2 = $date2['2'];
 				$month2 = $date2['1'];
 				$day2 = $date2['0'];
 				$nTransferDate = $year2 . "-" . $month2. "-" . $day2 ;
 
-				$date3 = explode("-",$drawResult["DrawDate"]);
-				$year3 = $date3['2'];
-				$month3 = $date3['1'];
-				$day3 = $date3['0'];
-				$nDrawDate = $year3 . "-" . $month3. "-" . $day3 ;
-    		 
       ?>
-    			<td><?php echo $nDrawDate; ?></td>
-    			<td><?php echo $nTransferDate ; ?></td>
-          		<td><?php echo $objResult["Pay"] ; ?></td>
-          		<td><?php echo $ExpensesResult["ExpensesName"] ; ?></td>
-
-          		<td><?php echo $drawResult["Draw"] ; ?></td>
-
-          		<td><?php echo $drawResult['DrawTax'] ;?></td>
-    			<td><?php echo $objResult["Transfer"] ; ?></td>
-    			<td><?php echo $objResult["Fee"] ; ?></td>
-
-    			<td><?php echo $drawResult['DrawID'] ; ?></td>
-    			<td><?php 
-
+    			<td rowspan="<?php echo $num;?>"><?php echo $drawResult["DrawDate"]; ?></td>
+    			<td rowspan="<?php echo $num;?>"><?php echo $nTransferDate ; ?></td>
+          <td rowspan="<?php echo $num;?>"><?php echo $objResult["Pay"] ; ?></td>
+          <td rowspan="<?php echo $num;?>"><?php echo $ExpensesResult["ExpensesName"] ; ?></td>
+          <td rowspan="<?php echo $num;?>"><?php echo $drawResult["Draw"] ; ?></td>
+          <td rowspan="<?php echo $num;?>"><?php echo $drawResult['DrawTax'] ;?></td>
+    			<td rowspan="<?php echo $num;?>"><?php echo $objResult["Transfer"] ; ?></td>
+    			<td rowspan="<?php echo $num;?>"><?php echo $objResult["Fee"] ; ?></td>
+    			<td rowspan="<?php echo $num;?>"><?php echo $drawResult['DrawID'] ; ?></td>
+    			<td rowspan="<?php echo $num;?>"><?php 
     			echo $partnersResult["PartnersName"] ; ?></td>
-    			<td><?php echo $empResult["EmName"] ; ?></td>
+          <td rowspan="<?php echo $num;?>"><?php echo $objResult["TransferNote"] ; ?></td>
+    <?php
+        while($sel_siteDrawResult = mysql_fetch_array($sel_siteDraw))
+    {
+           $sel_sitetype = mysql_query("SELECT * FROM sitetype WHERE `SiteTypeID` = '".$sel_siteDrawResult["SiteTypeID"]."'") or die (mysql_error());
+           $sitetypeResult = mysql_fetch_array($sel_sitetype);
 
+           $sel_emp = mysql_query("SELECT * FROM employee WHERE `EmID` = '".$sel_siteDrawResult["empID"]."'") or die (mysql_error());
+           $empResult = mysql_fetch_array($sel_emp);
+
+    ?>
+        <tr>
+    			<td><?php echo $empResult["EmName"] ; ?></td>
     			<td><?php echo $sitetypeResult["SiteTypeName"] ; ?></td>
-    			<td><?php echo $objResult["TransferNote"] ; ?></td>
   			</tr>
 <?php
-}
+}}
 ?>
 		</table>
 				</td>
