@@ -65,13 +65,13 @@ $objQuery = mysql_query($strSQL) or die (mysql_error());
     			<th> <div align="center">ยอดเบิก</div></th>
           		<th> <div align="center">หัก</div></th>
          		<th> <div align="center">ยอดจ่าย</div></th>
-    			<th> <div align="center">วางบิล</div></th>
           		<th> <div align="center">เงินโอน</div></th>
           		<th> <div align="center">หมายเหตุ</div></th>
           		<th> <div align="center">SiteCode</div></th>
           		<th> <div align="center">SiteName</div></th>
           		<th> <div align="center">ประเภทไซต์</div></th>
           		<th> <div align="center">พนักงาน</div></th>
+    			<th> <div align="center">วางบิล</div></th>
   			</tr>
 <?php
 while($objResult = mysql_fetch_array($objQuery))
@@ -103,34 +103,25 @@ while($objResult = mysql_fetch_array($objQuery))
 
     			?>
     			<td rowspan="<?php echo $num;?>"><?php echo $ExpensesResult["ExpensesName"] ; ?></td>
-          <td rowspan="<?php echo $num;?>"><?php echo $objResult["SentAt"] ; ?></td>
+          		<td rowspan="<?php echo $num;?>"><?php echo $objResult["SentAt"] ; ?></td>
     			<td rowspan="<?php echo $num;?>"><?php echo $objResult["Draw"] ; ?></td>
     			<td rowspan="<?php echo $num;?>"><?php echo $objResult["DrawTax"] ; ?></td>
           <?php
             $nDraw = $objResult["Draw"] - $objResult["DrawTax"];
           ?>
     			<td rowspan="<?php echo $num;?>"><?php echo $nDraw ; ?></td>
-          <td rowspan="<?php echo $num;?>">
-          <?php 
-			if($objResult['postatus']>0){
-				echo $objResult["poID"];
-			}else{
-				echo "<img src='images/no.jpg'>";
-			}
-	      ?>
-          </td>
-          <td rowspan="<?php echo $num;?>">
-           <?php 
-			if($objResult['transtatus']>0){
-				$sel_transfer = mysql_query("SELECT * FROM transfer WHERE `DrawID` = '".$objResult["DrawID"]."'") or die (mysql_error());
-           		$transferResult = mysql_fetch_array($sel_transfer);
-				echo $transferResult["TransferDate"];
-			}else{
-				echo "<img src='images/no.jpg'>";
-			}
-	      ?>
-	      </td>
-	      <td rowspan="<?php echo $num;?>"><?php echo $objResult["DrawNote"] ; ?></td>
+          		<td rowspan="<?php echo $num;?>">
+           			<?php 
+						if($objResult['transtatus']>0){
+								$sel_transfer = mysql_query("SELECT * FROM transfer WHERE `DrawID` = '".$objResult["DrawID"]."'") or die (mysql_error());
+           						$transferResult = mysql_fetch_array($sel_transfer);
+								echo $transferResult["TransferDate"];
+						}else{
+								echo "<img src='images/no.jpg'>";
+						}
+	      			?>
+	     		</td>
+	      		<td rowspan="<?php echo $num;?>"><?php echo $objResult["DrawNote"] ; ?></td>
 
 	    <?php
         while($sel_siteDrawResult = mysql_fetch_array($sel_siteDraw))
@@ -143,12 +134,22 @@ while($objResult = mysql_fetch_array($objQuery))
 
            $sel_emp = mysql_query("SELECT * FROM employee WHERE `EmID` = '".$sel_siteDrawResult["empID"]."'") or die (mysql_error());
            $empResult = mysql_fetch_array($sel_emp);
+
 		?>
 	    <tr>
           		<td><?php echo $sel_siteDrawResult["SiteCode"] ; ?></td>
           		<td><?php echo $siteResult["SiteName"] ; ?></td>
           		<td><?php echo $sitetypeResult["SiteTypeName"] ; ?></td>
     			<td><?php echo $empResult ["EmName"] ; ?></td>
+    			<td>
+          <?php 
+			if(empty($sel_siteDrawResult['poID'])){
+				echo "<img src='images/no.jpg'>";
+			}else{
+				echo $sel_siteDrawResult["poID"];
+			}
+	      ?>
+          		</td>
   		</tr>
   		<?php } ?>
 <?php

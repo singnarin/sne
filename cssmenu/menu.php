@@ -44,8 +44,10 @@
 		 </li>
          <li class='has-sub'><a href='#'><span>ใบสั่งซื้อ</span></a>
 		 	<ul>
-		 		<li class='last'><a href='orderadd.php'><span>เพิ่มใบสั่งซื้อ</span></a></li>
-				<li class='last'><a href='orderedit.php'><span>แก้ไขใบสั่งซื้อ</span></a></li>
+		 		<li class='last'><a href='orderadd.php'><span>เพิ่มใบสั่งซื้อเข้า</span></a></li>
+				<li class='last'><a href='orderedit.php'><span>แก้ไขใบสั่งซื้อเข้า</span></a></li>
+				<li class='last'><a href='orderoutadd.php'><span>เพิ่มใบสั่งซื้อออก</span></a></li>
+				<li class='last'><a href='orderoutedit.php'><span>แก้ไขใบสั่งซื้อออก</span></a></li>
 			</ul>
 		 </li>
 		 <li class='has-sub'><a href='#'><span>บริษัทคู่ค้า</span></a>

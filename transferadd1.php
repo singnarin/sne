@@ -15,9 +15,7 @@ $Transfer = $_POST['txtTransfer'];
 $Fee = $_POST['txtFee'];
 $TransferNote = $_POST['txtNote'];
 $PartnersID = $_POST['txtPartnersID'];
-
-$sel_draw = mysql_query("select * from drawmoney WHERE DrawID = '".$DrawID."'") or die(mysql_error());
-$drawResult = mysql_fetch_array($sel_draw);
+$Draw = $_POST['txtDraw'];
 
 $date = explode("-",$TransferDate);
 $year = $date['2'];
@@ -26,11 +24,12 @@ $day = $date['0'];
 $nTransferDate = $year . "-" . $month . "-" . $day ;
 
 
-$sql_add = "insert into transfer(TransferID, DrawID, TransferDate, Pay, Transfer, Fee,  TransferNote, PartnersID, SiteTypeID, empID) 
-						values ('$TransferID', '$DrawID', '$nTransferDate', '$Pay', '$Transfer', '$Fee', '$TransferNote', '$PartnersID', '".$drawResult["SiteTypeID"]."', '".$drawResult["empID"]."')";
-mysql_query($sql_add) or die(mysql_error());
-$sql_update = "UPDATE `drawmoney` SET `transtatus` = '1' WHERE `drawmoney`.`DrawID` = '".$DrawID."';";
-mysql_query($sql_update) or die(mysql_error());
+mysql_query("insert into transfer(TransferID, DrawID, TransferDate, Pay, Transfer, Fee,  TransferNote, PartnersID, Draw) 
+						values ('$TransferID', '$DrawID', '$nTransferDate', '$Pay', '$Transfer', '$Fee', '$TransferNote', '$PartnersID', '$Draw')") or die(mysql_error());
+
+mysql_query("UPDATE `drawmoney` SET `transtatus` = '1' WHERE `DrawID` = '".$DrawID."'") or die(mysql_error());
+mysql_query("UPDATE `site_draw` SET `TransferID` = '$TransferID' WHERE `DrawID` = '".$DrawID."'") or die(mysql_error());
+
 
 $message = "บันทึกข้อมูลของคุณเรียบร้อย";
 	echo "<script type='text/javascript'>alert('$message');</script>";

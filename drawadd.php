@@ -205,7 +205,9 @@ $sl++;
           <td>หัก</td>
           <td><input name="txtTax" type="radio" value="1" />1%
               <input name="txtTax" type="radio" value="3" />3%
-              <input name="txtTax" type="radio" value="7" />7%</td>
+              <input name="txtTax" type="radio" value="5" />5%
+              <input name="txtTax" type="radio" value="7" />7%
+          </td>
         </tr>
 		    <tr>
           <td>หมายเหตุ</td>
