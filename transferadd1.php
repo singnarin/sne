@@ -34,8 +34,10 @@ mysql_query("insert into transfer(TransferID, DrawID, TransferDate, Pay, Transfe
 						values ('$TransferID', '$DrawID', '$nTransferDate', '$Pay', '$Transfer', '$Fee', '$TransferNote', '$PartnersID', '$Draw', '$ExpensesID')") or die(mysql_error());
 
 mysql_query("UPDATE `drawmoney` SET `transtatus` = '1' WHERE `DrawID` = '".$DrawID."'") or die(mysql_error());
-mysql_query("UPDATE `site_draw` SET `TransferID` = '$TransferID' WHERE `DrawID` = '".$DrawID."'") or die(mysql_error());
 
+if ($DrawID != ''){
+mysql_query("UPDATE `site_draw` SET `TransferID` = '$TransferID' WHERE `DrawID` = '".$DrawID."'") or die(mysql_error());
+}
 
 $message = "บันทึกข้อมูลของคุณเรียบร้อย";
 	echo "<script type='text/javascript'>alert('$message');</script>";

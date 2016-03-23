@@ -36,10 +36,10 @@ for($i=1;$i<=(int)$_POST["hdnMaxLine"];$i++)
 			$data = mysql_fetch_array($check_log);
 
 			if ($num > 0 && empty($data["DrawID"])) {
-				echo "update";
+				mysql_query("UPDATE `site_draw` SET `DrawID` = '".$DrawID."', `DrawDate` = '".$nDrawDate."' WHERE `site_drawID` = '".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."'") or die(mysql_error());
 			}
 			if ($num == 0 && $data["DrawID"] == "") {
-				$sql_add2 = "insert into site_draw(site_drawID, DrawID, SiteCode, SiteTypeID, empID) values ('".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."', '".$DrawID."', '".$_POST['txtSiteCode_'.$i]."', '".$_POST['txtSiteType_'.$i]."', '".$_POST['txtempID_'.$i]."')";
+				$sql_add2 = "insert into site_draw(site_drawID, DrawID, SiteCode, SiteTypeID, empID, DrawDate) values ('".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."', '".$DrawID."', '".$_POST['txtSiteCode_'.$i]."', '".$_POST['txtSiteType_'.$i]."', '".$_POST['txtempID_'.$i]."', '".$nDrawDate."')";
 				mysql_query($sql_add2) or die(mysql_error());
 			}
 			if ($num > 0 && $data["DrawID"] != "") {

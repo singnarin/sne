@@ -2,7 +2,7 @@
 <?php
 include("include/connect.php");
 
-	mysql_query("DELETE FROM `site_draw` WHERE poID = '".$_GET["poID"]."'") or die(mysql_error());
+	mysql_query("UPDATE `site_draw` SET poID = ''  WHERE poID = '".$_GET["poID"]."'") or die(mysql_error());
 	mysql_query("DELETE FROM `po` WHERE poID = '".$_GET["poID"]."'") or die(mysql_error());
 	
 

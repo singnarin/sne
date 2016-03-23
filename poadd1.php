@@ -61,7 +61,7 @@ if ($numCheck > 0) {
 	echo "<script type='text/javascript'>alert('$message');</script>";
 	echo "<meta http-equiv='refresh' content='0;URL=poadd.php'>";
 }else{
-	mysql_query("DELETE  FROM `site_draw` WHERE `poID` = '".$poID."'") or die(mysql_error());
+	mysql_query("UPDATE `site_draw` SET `poID` = '' WHERE `poID` = '".$poID."'") or die(mysql_error());
 	echo "<meta http-equiv='refresh' content='0;URL=poadd.php'>";
 }
 ?>

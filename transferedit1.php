@@ -35,8 +35,8 @@ $nendDate = $year1 . "-" . $month1 . "-" . $day1 ;
 
 //$sel = $_POST['txtsel'];
 //echo $nbeginDate . "--->" . $nendDate ;
-$strSQL = "SELECT * FROM transfer WHERE 1 ";
-	if($nbeginDate !='' &&  $nendDate !=''){
+$strSQL = "SELECT * FROM site_draw WHERE 1 AND TransferID != ''";
+		if($nbeginDate !='' &&  $nendDate !=''){
 			$strSQL .= " AND `TransferDate` BETWEEN '".$nbeginDate."' AND '".$nendDate."'";
 		}
 		if($txtSiteTypeID !=''){
@@ -45,6 +45,7 @@ $strSQL = "SELECT * FROM transfer WHERE 1 ";
 		if($txtEmpID !=''){
 			$strSQL .= " AND empID = '".$txtEmpID."'";
 		}
+		$strSQL .= "GROUP BY TransferID";
 $objQuery = mysql_query($strSQL) or die (mysql_error());
 
 ?>
@@ -61,57 +62,75 @@ $objQuery = mysql_query($strSQL) or die (mysql_error());
     			<th> <div align="center">ลำดับที่โอน</div></th>
     			<th> <div align="center">วันที่เบิก</div></th>
     			<th> <div align="center">วันที่โอน</div></th>
-          <th> <div align="center">ใบสำคัญจ่าย</div></th>
+          		<th> <div align="center">ใบสำคัญจ่าย</div></th>
     			<th> <div align="center">ค่าใช้จ่าย</div></th>
     			<th> <div align="center">ยอดเบิก</div></th>
-          <th> <div align="center">หัก</div></th>
-         	<th> <div align="center">ยอดโอน</div></th>
+          		<th> <div align="center">หัก</div></th>
+         		<th> <div align="center">ยอดโอน</div></th>
     			<th> <div align="center">ค่าธรรมเนียม</div></th>
     			<th> <div align="center">เลขที่เบิก</div></th>
     			<th> <div align="center">คู่ค้า</div></th>
-          <th> <div align="center">หมายเหตุ</div></th>
+          		<th> <div align="center">หมายเหตุ</div></th>
     			<th> <div align="center">พนักงาน</div></th>
-          <th> <div align="center">ประเภทไซต์</div></th>
+          		<th> <div align="center">ประเภทไซต์</div></th>
   			</tr>
 <?php
 while($objResult = mysql_fetch_array($objQuery))
 {
-  $sel_siteDraw = mysql_query("SELECT * FROM site_draw WHERE DrawID = '".$objResult["DrawID"]."'") or die (mysql_error());
-  $num = mysql_num_rows($sel_siteDraw) + 1;
+	$objQuery1 = mysql_query("SELECT * FROM transfer WHERE TransferID = '".$objResult["TransferID"]."'") or die (mysql_error());
+	$objResult1 = mysql_fetch_array($objQuery1);
+
+	$sel_Expenses = mysql_query("SELECT * FROM expenses WHERE `ExpensesID` = '".$objResult1["ExpensesID"]."'") or die (mysql_error());
+    $ExpensesResult = mysql_fetch_array($sel_Expenses);
+
+    $strSQL1 = "SELECT * FROM site_draw WHERE 1 ";
+		if($objResult["TransferID"] !=''){
+			$strSQL1 .= " AND TransferID = '".$objResult["TransferID"]."'";
+		}
+		if($txtSiteTypeID !=''){
+			$strSQL1 .= " AND SiteTypeID = '".$txtSiteTypeID."'";
+		}
+		if($txtEmpID !=''){
+			$strSQL1 .= " AND empID = '".$txtEmpID."'";
+		}
+	$sel_siteDraw = mysql_query($strSQL1) or die (mysql_error());
+	$num = mysql_num_rows($sel_siteDraw) + 1;
 ?>
   			<tr>
-  				<td rowspan="<?php echo $num;?>"><a href="deltransfer.php?TransferID=<?php echo $objResult["TransferID"];?>" target = "_blank" onclick="window.reload();"><img src = "images/no.jpg"></a></td>
-    			<td rowspan="<?php echo $num;?>"><div align="center"><a href="transferupdate.php?TransferID=<?php echo $objResult["TransferID"] ; ?>" target = "_blank"><?php echo $objResult["TransferID"];?> </a></div></td>
+  				<td rowspan="<?php echo $num;?>"><a href="deltransfer.php?TransferID=<?php echo $objResult["TransferID"];?>" target = "_blank"><img src = "images/no.jpg"></a></td>
+    			<td rowspan="<?php echo $num;?>"><div align="center"><a href="transferupdate.php?TransferID=<?php echo $objResult["TransferID"] ; ?>" target = "_blank">
+    			<?php echo $objResult["TransferID"];?> </a></div></td>
     	<?php 
-
-				      $sel_draw = mysql_query("SELECT * FROM drawmoney WHERE `DrawID` = '".$objResult["DrawID"]."'") or die (mysql_error());
-            	$drawResult = mysql_fetch_array($sel_draw);
-
-            	$sel_Expenses = mysql_query("SELECT * FROM expenses WHERE `ExpensesID` = '".$objResult["ExpensesID"]."'") or die (mysql_error());
-    			    $ExpensesResult = mysql_fetch_array($sel_Expenses);
-
-            	$sel_partners = mysql_query("SELECT * FROM partners WHERE `PartnersID` = '".$objResult["PartnersID"]."'") or die (mysql_error());
+            	$sel_partners = mysql_query("SELECT * FROM partners WHERE `PartnersID` = '".$objResult1["PartnersID"]."'") or die (mysql_error());
             	$partnersResult = mysql_fetch_array($sel_partners);
 
-    		$date2 = explode("-",$objResult["TransferDate"]);
+            	$sel_draw = mysql_query("SELECT * FROM drawmoney WHERE DrawID = '".$objResult1["DrawID"]."'") or die (mysql_error());
+				$sel_drawResult1 = mysql_fetch_array($sel_draw);
+
+    			$date2 = explode("-",$objResult1["TransferDate"]);
 				$year2 = $date2['2'];
 				$month2 = $date2['1'];
 				$day2 = $date2['0'];
 				$nTransferDate = $year2 . "-" . $month2. "-" . $day2 ;
 
-      ?>
-    			<td rowspan="<?php echo $num;?>"><?php echo $drawResult["DrawDate"]; ?></td>
+				$date3 = explode("-",$sel_drawResult1["DrawDate"]);
+				$year3 = $date3['2'];
+				$month3 = $date3['1'];
+				$day3 = $date3['0'];
+				$nDrawDate = $year3 . "-" . $month3. "-" . $day3 ;
+
+      	?>
+    			<td rowspan="<?php echo $num;?>"><?php echo $nDrawDate; ?></td>
     			<td rowspan="<?php echo $num;?>"><?php echo $nTransferDate ; ?></td>
-          <td rowspan="<?php echo $num;?>"><?php echo $objResult["Pay"] ; ?></td>
-          <td rowspan="<?php echo $num;?>"><?php echo $ExpensesResult["ExpensesName"] ; ?></td>
-          <td rowspan="<?php echo $num;?>"><?php echo $drawResult["Draw"] ; ?></td>
-          <td rowspan="<?php echo $num;?>"><?php echo $drawResult['DrawTax'] ;?></td>
-    			<td rowspan="<?php echo $num;?>"><?php echo $objResult["Transfer"] ; ?></td>
-    			<td rowspan="<?php echo $num;?>"><?php echo $objResult["Fee"] ; ?></td>
-    			<td rowspan="<?php echo $num;?>"><?php echo $drawResult['DrawID'] ; ?></td>
-    			<td rowspan="<?php echo $num;?>"><?php 
-    			echo $partnersResult["PartnersName"] ; ?></td>
-          <td rowspan="<?php echo $num;?>"><?php echo $objResult["TransferNote"] ; ?></td>
+          		<td rowspan="<?php echo $num;?>"><?php echo $objResult1["Pay"] ; ?></td>
+         		<td rowspan="<?php echo $num;?>"><?php echo $ExpensesResult["ExpensesName"] ; ?></td>
+          		<td rowspan="<?php echo $num;?>"><?php echo $sel_drawResult1["Draw"] ; ?></td>
+          		<td rowspan="<?php echo $num;?>"><?php echo $sel_drawResult1['DrawTax'] ;?></td>
+    			<td rowspan="<?php echo $num;?>"><?php echo $objResult1["Transfer"] ; ?></td>
+    			<td rowspan="<?php echo $num;?>"><?php echo $objResult1["Fee"] ; ?></td>
+    			<td rowspan="<?php echo $num;?>"><?php echo $sel_drawResult1['DrawID'] ; ?></td>
+    			<td rowspan="<?php echo $num;?>"><?php echo $partnersResult["PartnersName"] ; ?></td>
+          		<td rowspan="<?php echo $num;?>"><?php echo $objResult1["TransferNote"] ; ?></td>
     <?php
         while($sel_siteDrawResult = mysql_fetch_array($sel_siteDraw))
     {
@@ -125,11 +144,47 @@ while($objResult = mysql_fetch_array($objQuery))
         <tr>
     			<td><?php echo $empResult["EmName"] ; ?></td>
     			<td><?php echo $sitetypeResult["SiteTypeName"] ; ?></td>
-  			</tr>
+  		</tr>
 <?php
 }}
 ?>
 		</table>
+<?php
+if ($txtSiteTypeID == '' && $txtEmpID == '') {
+?>
+<div align="center"><h4>รายงานการโอนที่ไม่มีใบเบิก</h4></div>
+		<table class="table table-bordered">
+		<tr>
+    			<th> <div align="center">ลบ</div></th>
+    			<th> <div align="center">ลำดับที่โอน</div></th>
+    			<th> <div align="center">วันที่โอน</div></th>
+          		<th> <div align="center">ใบสำคัญจ่าย</div></th>
+    			<th> <div align="center">ค่าใช้จ่าย</div></th>
+         		<th> <div align="center">ยอดโอน</div></th>
+    			<th> <div align="center">ค่าธรรมเนียม</div></th>
+          		<th> <div align="center">หมายเหตุ</div></th>
+  			</tr>
+		<?php
+			$sel_transfer = mysql_query("SELECT * FROM transfer WHERE DrawID = '' AND `TransferDate` BETWEEN '".$nbeginDate."' AND '".$nendDate."'") or die (mysql_error());
+			while($sel_transferResult = mysql_fetch_array($sel_transfer))
+			{
+		?>
+			<td><a href="deltransfer.php?TransferID=<?php echo $sel_transferResult["TransferID"];?>" target = "_blank"><img src = "images/no.jpg"></a></td>
+			<td><a href="transferupdate.php?TransferID=<?php echo $sel_transferResult["TransferID"] ; ?>" target = "_blank"><?php echo $sel_transferResult["TransferID"]?></a></td>
+			<td><?php echo $sel_transferResult["TransferDate"] ;?></td>
+			<td><?php echo $sel_transferResult["Pay"]?></td>
+			<?php
+				$sel_Expenses2 = mysql_query("SELECT * FROM expenses WHERE `ExpensesID` = '".$sel_transferResult["ExpensesID"]."'") or die (mysql_error());
+    			$ExpensesResult2 = mysql_fetch_array($sel_Expenses2);
+			?>
+			<td><?php echo $ExpensesResult2["ExpensesName"]?></td>
+			<td><?php echo $sel_transferResult["Transfer"]?></td>
+			<td><?php echo $sel_transferResult["Fee"]?></td>
+			<td><?php echo $sel_transferResult["TransferNote"]?></td>
+		</tr>
+		<?php } ?>
+		</table>
+<?php } ?>
 				</td>
        		</tr>
 		</table>
