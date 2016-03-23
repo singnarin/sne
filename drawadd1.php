@@ -14,6 +14,7 @@ $Draw =$_POST['txtDraw'];
 $DrawTax = $_POST['txtTax'];
 $DrawNote = $_POST['txtNote'];
 $ExpensesID = $_POST['txtExpensesID'];
+$Persen = $_POST['txtPersen'];
 
 $date = explode("-",$DrawDate);
 $year = $date['2'];
@@ -34,12 +35,13 @@ for($i=1;$i<=(int)$_POST["hdnMaxLine"];$i++)
 			$check_log = mysql_query("SELECT * FROM site_draw WHERE site_drawID = '".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."'");
 			$num = mysql_num_rows($check_log);
 			$data = mysql_fetch_array($check_log);
+			$sumPersen = $data["Persen"] + $Persen ;
 
-			if ($num > 0 && empty($data["DrawID"])) {
-				mysql_query("UPDATE `site_draw` SET `DrawID` = '".$DrawID."', `DrawDate` = '".$nDrawDate."' WHERE `site_drawID` = '".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."'") or die(mysql_error());
+			if ($num > 0 && $data["Persen"] < 100 ) {
+				mysql_query("UPDATE `site_draw` SET `DrawID` = '".$DrawID."', `DrawDate` = '".$nDrawDate."', 'persen' = '".$sumPersen."' WHERE `site_drawID` = '".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."'") or die(mysql_error());
 			}
 			if ($num == 0 && $data["DrawID"] == "") {
-				$sql_add2 = "insert into site_draw(site_drawID, DrawID, SiteCode, SiteTypeID, empID, DrawDate) values ('".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."', '".$DrawID."', '".$_POST['txtSiteCode_'.$i]."', '".$_POST['txtSiteType_'.$i]."', '".$_POST['txtempID_'.$i]."', '".$nDrawDate."')";
+				$sql_add2 = "insert into site_draw(site_drawID, DrawID, SiteCode, SiteTypeID, empID, DrawDate, persen) values ('".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."', '".$DrawID."', '".$_POST['txtSiteCode_'.$i]."', '".$_POST['txtSiteType_'.$i]."', '".$_POST['txtempID_'.$i]."', '".$nDrawDate."', '".$Persen."')";
 				mysql_query($sql_add2) or die(mysql_error());
 			}
 			if ($num > 0 && $data["DrawID"] != "") {

@@ -117,7 +117,7 @@ function OpenPopup(intLine)
     <td><div align="center">
       <table border="0">
         <tr>
-          <td>เลขที่วางบิล</td>
+          <td>เลขที่ PO</td>
           <td colspan="3"><input type="text" name="txtpoID" value="" /></td>
         </tr>
         <tr>

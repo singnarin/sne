@@ -197,6 +197,10 @@ $sl++;
           <input type="text" name="txtExpensesName" id="txtExpensesName" readonly="readonly" />
           <INPUT TYPE="BUTTON" NAME="btnPopup_1"  ID="btnPopup_0" VALUE="..." OnClick="OpenPopup1()"></td>
         </tr>
+         <tr>
+          <td>เบิก</td>
+          <td><input type="text" name="txtPersen" id="txtPersen"/>เปอร์เซ็น</td>
+        </tr>
 		    <tr>
           <td>ยอดเบิก</td>
 		      <td><input type="text" name="txtDraw" id="txtDraw"/></td>
