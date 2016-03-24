@@ -58,22 +58,27 @@ $objQuery = mysql_query($strSQL) or die (mysql_error());
         	 <td colspan="5"><div align="center">
 		<table class="table table-bordered" >
   			<tr>
-    			<th> <div align="center">ลบ</div></th>
-    			<th> <div align="center">เลขที่ขอเบิก</div></th>
-    			<th> <div align="center">วันที่</div></th>
-          		<th> <div align="center">ค่าใช้จ่าย</div></th>
-    			<th> <div align="center">ส่งที่</div></th>
-    			<th> <div align="center">ยอดเบิก</div></th>
-          		<th> <div align="center">หัก</div></th>
-         		<th> <div align="center">ยอดจ่าย</div></th>
-          		<th> <div align="center">เงินโอน</div></th>
-          		<th> <div align="center">หมายเหตุ</div></th>
-          		<th> <div align="center">SiteCode</div></th>
-          		<th> <div align="center">SiteName</div></th>
-          		<th> <div align="center">ประเภทไซต์</div></th>
-          		<th> <div align="center">พนักงาน</div></th>
-    			<th> <div align="center">วางบิล</div></th>
-  			</tr>
+    			<th rowspan="2"> <div align="center">ลบ</div></th>
+    			<th rowspan="2"> <div align="center">เลขที่ขอเบิก</div></th>
+    			<th rowspan="2"> <div align="center">วันที่</div></th>
+          		<th rowspan="2"> <div align="center">ค่าใช้จ่าย</div></th>
+    			<th rowspan="2"> <div align="center">ส่งที่</div></th>
+    			<th rowspan="2"> <div align="center">ยอดเบิก</div></th>
+          		<th rowspan="2"> <div align="center">หัก</div></th>
+         		<th rowspan="2"> <div align="center">ยอดจ่าย</div></th>
+          		<th rowspan="2"> <div align="center">เงินโอน</div></th>
+          		<th rowspan="2"> <div align="center">หมายเหตุ</div></th>
+          		<th rowspan="2"> <div align="center">SiteCode</div></th>
+          		<th rowspan="2"> <div align="center">SiteName</div></th>
+          		<th rowspan="2"> <div align="center">ประเภทไซต์</div></th>
+          		<th rowspan="2"> <div align="center">พนักงาน</div></th>
+    			<th colspan="3"><div align="center">วางบิล</div></th>
+				</tr>
+			<tr>
+    			<th>ลำดับที่</th>
+    			<th>matt</th>
+    			<th>service</th>
+			</tr>
 <?php
 while($objResult = mysql_fetch_array($objQuery))
 {
@@ -138,12 +143,30 @@ while($objResult = mysql_fetch_array($objQuery))
     			<td><?php echo $empResult ["EmName"] ; ?></td>
     			<td>
           <?php 
-			if(empty($sel_siteDrawResult['poID'])){
+			if(empty($sel_siteDrawResult['po'])){
 				echo "<img src='images/no.jpg'>";
 			}else{
-				echo $sel_siteDrawResult["poID"];
+				echo $sel_siteDrawResult["po"];
 			}
 	      ?>
+          		</td>
+          		<td>
+          <?php 
+			if($sel_siteDrawResult['Matt'] == 0){
+				echo "<img src='images/no.jpg'>";
+			}else{
+				echo $sel_siteDrawResult["Matt"];
+			}
+	      ?>
+	      		</td>
+          		<td>
+		<?php 
+			if($sel_siteDrawResult['Service'] == 0){
+				echo "<img src='images/no.jpg'>";
+			}else{
+				echo $sel_siteDrawResult["Service"];
+			}
+	     ?>
           		</td>
   		</tr>
   		<?php } ?>
