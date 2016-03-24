@@ -116,6 +116,18 @@ function OpenPopup(intLine)
   <tr>
     <td><div align="center">
       <table border="0">
+      <tr>
+          <td>ลำดับที่วางบิล</td>
+<?php 
+          $new_id =mysql_result(mysql_query("Select Max(substr(poNo,-6))+1 as MaxID from  po"),0,"MaxID");
+            if($new_id==''){
+                $std_id="PO000001";
+            }else{
+                $std_id="PO" . sprintf("%06d",$new_id); 
+            } 
+?>
+          <td colspan="3"><input type="text" name="txtpoNo" value="<?php echo $std_id; ?>" /></td>
+        </tr>
         <tr>
           <td>เลขที่ PO</td>
           <td colspan="3"><input type="text" name="txtpoID" value="" /></td>

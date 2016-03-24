@@ -125,11 +125,11 @@ include("include/calenda.php");
         <tr>
           <td width="227">ลำดับที่</td>
 <?php 
-		      $new_id =mysql_result(mysql_query("Select Max(substr(DrawID,-3))+1 as MaxID from  drawmoney"),0,"MaxID");
+		      $new_id =mysql_result(mysql_query("Select Max(substr(DrawID,-6))+1 as MaxID from  drawmoney"),0,"MaxID");
             if($new_id==''){
-                $std_id="DW001";
+                $std_id="DW000001";
             }else{
-                $std_id="DW" . sprintf("%03d",$new_id); 
+                $std_id="DW" . sprintf("%06d",$new_id); 
             } 
 ?>
 		  
