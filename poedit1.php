@@ -66,7 +66,7 @@ while($objResult = mysql_fetch_array($objQuery))
 	  $sel_partners = mysql_query("SELECT * FROM partners WHERE `PartnersID` = '".$objResult["PartnersID"]."'") or die (mysql_error());
     $partnersResult = mysql_fetch_array($sel_partners);
 
-          $sel_siteDraw = mysql_query("SELECT * FROM site_draw WHERE `poID` = '".$objResult["poID"]."'") or die (mysql_error());
+          $sel_siteDraw = mysql_query("SELECT * FROM site_draw WHERE `po` = '".$objResult["poID"]."'") or die (mysql_error());
           $siteDrawResult = mysql_fetch_array($sel_siteDraw);
           $num = mysql_num_rows($sel_siteDraw) + 1;
 
