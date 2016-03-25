@@ -36,18 +36,32 @@ for($i=1;$i<=(int)$_POST["hdnMaxLine"];$i++)
 {
 	if($_POST["txtSiteCode_".$i] != "" )
 		{   
-			$check_log = mysql_query("SELECT * FROM site_draw WHERE SiteCode = '".$_POST['txtSiteCode_'.$i]."' AND SiteTypeID = '".$_POST['txtSiteType_'.$i]."'");
+			$check_log = mysql_query("SELECT * FROM persen WHERE persenID = '".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."'");
 			$num = mysql_num_rows($check_log);
 			$data = mysql_fetch_array($check_log);
 
-			if ($num > 0 && empty($data["po"])) {
-				mysql_query("UPDATE `site_draw` SET `po` = '".$poID."', `Matt` = '".$npoDate."', `Service` = '".$npoDate."' WHERE SiteCode = '".$_POST['txtSiteCode_'.$i]."' AND SiteTypeID = '".$_POST['txtSiteType_'.$i]."'") or die(mysql_error());
+			if ($num > 0 && empty($data['po']) && $data['Matt'] == '0000-00-00' && $data['Service'] == '0000-00-00') {
+				mysql_query("UPDATE `persen` SET `po` = '".$poID."', `Matt` = '".$npoDate."', `Service` = '".$npoDate."' WHERE persenID = '".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."'") or die(mysql_error());
 			}
-			if ($num == 0 ) {
-				$sql_add2 = "insert into site_draw(site_drawID, po, SiteCode, SiteTypeID, empID, Matt, Service) values ('".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."', '".$poID."', '".$_POST['txtSiteCode_'.$i]."', '".$_POST['txtSiteType_'.$i]."', '".$_POST['txtempID_'.$i]."', '".$Matt."', '".$Service."')";
+			if ($num > 0 && $data['Matt'] == '0000-00-00' && $data['Service'] != '0000-00-00') {
+				mysql_query("UPDATE `persen` SET `po` = '".$poID."', `Matt` = '".$npoDate."' WHERE persenID = '".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."'") or die(mysql_error());
+			}
+			if ($num > 0 && $data['Service'] == '0000-00-00' && $data['Matt'] != '0000-00-00') {
+				mysql_query("UPDATE `persen` SET `po` = '".$poID."', `Service` = '".$npoDate."' WHERE persenID = '".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."'") or die(mysql_error());
+			}
+			if ($num == 0 && $Matt == '' && $Service == '') {
+				$sql_add2 = "insert into persen(persenID, po, Matt, Service) values ('".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."', '".$poID."', '".$npoDate."', '".$npoDate."')";
 				mysql_query($sql_add2) or die(mysql_error());
 			}
-			if ($num > 0 && $data["po"] != "") {
+			if ($num == 0 && $Matt == '' && $Service != '' ) {
+				$sql_add2 = "insert into persen(persenID, po, Matt) values ('".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."', '".$poID."', '".$npoDate."')";
+				mysql_query($sql_add2) or die(mysql_error());
+			}
+			if ($num == 0 && $Service == '' && $Matt != '') {
+				$sql_add2 = "insert into persen(persenID, po, Service) values ('".$_POST['txtSiteCode_'.$i].$_POST['txtSiteType_'.$i]."', '".$poID."', '".$npoDate."')";
+				mysql_query($sql_add2) or die(mysql_error());
+			}
+			if ($num > 0 && $data["po"] != "" && $data['Matt'] != '0000-00-00' && $data['Service'] != '0000-00-00') {
 				$message = "SiteCode : " . $_POST['txtSiteCode_'.$i]. " และ SiteTypeID  : " .$_POST['txtSiteType_'.$i] . "  ซ้ำ";
 				echo "<script type='text/javascript'>alert('$message');</script>";
 				mysql_query("DELETE  FROM `po` WHERE `poNo` = '".$poNo."'") or die(mysql_error());
@@ -62,7 +76,7 @@ if ($numCheck > 0) {
 	echo "<script type='text/javascript'>alert('$message');</script>";
 	echo "<meta http-equiv='refresh' content='0;URL=poadd.php'>";
 }else{
-	mysql_query("UPDATE `site_draw` SET `po` = '' WHERE `po` = '".$poID."'") or die(mysql_error());
+	mysql_query("UPDATE `persen` SET `po` = '', `Matt` = '', `Service` = '' WHERE `po` = '".$poID."'") or die(mysql_error());
 	echo "<meta http-equiv='refresh' content='0;URL=poadd.php'>";
 }
 ?>

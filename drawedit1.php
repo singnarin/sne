@@ -143,28 +143,30 @@ while($objResult = mysql_fetch_array($objQuery))
     			<td><?php echo $empResult ["EmName"] ; ?></td>
     			<td>
           <?php 
-			if(empty($sel_siteDrawResult['po'])){
+          	$check_log = mysql_query("SELECT * FROM persen WHERE persenID = '".$sel_siteDrawResult['SiteCode'].$sel_siteDrawResult['SiteTypeID']."'");
+			$data = mysql_fetch_array($check_log);
+			if(empty($data['po'])){
 				echo "<img src='images/no.jpg'>";
 			}else{
-				echo $sel_siteDrawResult["po"];
+				echo $data["po"];
 			}
 	      ?>
           		</td>
           		<td>
           <?php 
-			if($sel_siteDrawResult['Matt'] == 0){
+			if($data['Matt'] == 0){
 				echo "<img src='images/no.jpg'>";
 			}else{
-				echo $sel_siteDrawResult["Matt"];
+				echo $data["Matt"];
 			}
 	      ?>
 	      		</td>
           		<td>
 		<?php 
-			if($sel_siteDrawResult['Service'] == 0){
+			if($data['Service'] == 0){
 				echo "<img src='images/no.jpg'>";
 			}else{
-				echo $sel_siteDrawResult["Service"];
+				echo $data["Service"];
 			}
 	     ?>
           		</td>
