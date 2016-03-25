@@ -65,60 +65,54 @@ while($objResult = mysql_fetch_array($objQuery))
 {
 	  	$sel_partners = mysql_query("SELECT * FROM partners WHERE `PartnersID` = '".$objResult["PartnersID"]."'") or die (mysql_error());
     	$partnersResult = mysql_fetch_array($sel_partners);
-
-        $sel_siteDraw = mysql_query("SELECT * FROM persen WHERE `po` = '".$objResult["poID"]."'") or die (mysql_error());
-        $siteDrawResult = mysql_fetch_array($sel_siteDraw);
-        $num = mysql_num_rows($sel_siteDraw) - 1 ;
-
+            $sel_persen = mysql_query("SELECT * FROM persen WHERE `po` = '".$objResult["poID"]."'") or die (mysql_error());
+            $num = mysql_num_rows($sel_persen) +1;
 ?>
   			<tr>
-          		<td rowspan="<?php echo $num;?>"><a href="podel.php?poID=<?php echo $objResult["poID"];?>" target = "_blank"><img src = "images/no.jpg"></a></td>
-    			<td rowspan="<?php echo $num ; ?>"><div align="center"><?php echo $objResult["poID"];?> </td>
-          		<td rowspan="<?php echo $num ; ?>">
+          	 <td rowspan="<?php echo $num; ?>"><a href="podel.php?poID=<?php echo $objResult["poID"];?>" target = "_blank"><img src = "images/no.jpg"></a></td>
+    			   <td rowspan="<?php echo $num; ?>"><div align="center"><?php echo $objResult["poID"];?> </td>
+          	 <td rowspan="<?php echo $num; ?>">
     			<?php 
     				$date2 = explode("-",$objResult["poDate"]);
 				  	$year2 = $date2['2'];
 				  	$month2 = $date2['1'];
 				  	$day2 = $date2['0'];
-				 	$nDate2 = $year2 . "-" . $month2. "-" . $day2 ;
+				 	  $nDate2 = $year2 . "-" . $month2. "-" . $day2 ;
     				echo $nDate2 ; 
     			?>
           		</td>
-    			<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["NoIn"] ; ?></td>
-    			<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["NoInNum"] ; ?></td>
-          		<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["TaxIn"] ; ?></td>
-          		<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["TaxInNum"] ; ?></td>
-          		<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["Matt"] ; ?></td>
-          		<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["Service"] ; ?></td>
-          		<td rowspan="<?php echo $num ; ?>"><?php echo $partnersResult["PartnersName"] ; ?></td>
-    			<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["po"] ; ?></td>
-          		<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["project"] ; ?></td>
-    			<td rowspan="<?php echo $num ; ?>"><?php echo $objResult["poNote"] ; ?></td>
+    			      <td rowspan="<?php echo $num; ?>"><?php echo $objResult["NoIn"] ; ?></td>
+    			      <td rowspan="<?php echo $num; ?>"><?php echo $objResult["NoInNum"] ; ?></td>
+          		  <td rowspan="<?php echo $num; ?>"><?php echo $objResult["TaxIn"] ; ?></td>
+          		  <td rowspan="<?php echo $num; ?>"><?php echo $objResult["TaxInNum"] ; ?></td>
+          		  <td rowspan="<?php echo $num; ?>"><?php echo $objResult["Matt"] ; ?></td>
+          		  <td rowspan="<?php echo $num; ?>"><?php echo $objResult["Service"] ; ?></td>
+          		  <td rowspan="<?php echo $num; ?>"><?php echo $partnersResult["PartnersName"] ; ?></td>
+    			      <td rowspan="<?php echo $num; ?>"><?php echo $objResult["po"] ; ?></td>
+          		  <td rowspan="<?php echo $num; ?>"><?php echo $objResult["project"] ; ?></td>
+    			      <td rowspan="<?php echo $num; ?>"><?php echo $objResult["poNote"] ; ?></td>
     		
 <?php
-            			$poTax = $objResult["po"] * 7 / 100 ;
-            			$sumpo = $poTax + $objResult["po"] ; 
-
-          	while($siteDrawResult = mysql_fetch_array($sel_siteDraw)){
+          	while($persenResult = mysql_fetch_array($sel_persen)){
 ?>
-			<tr>
+      <tr>
 				<td>
 					<?php 
-						$sel_site = mysql_query("SELECT * FROM site WHERE `SiteCode` = '".substr($siteDrawResult['persenID'],0 , -5)."'") or die (mysql_error());
+						$sel_site = mysql_query("SELECT * FROM site WHERE `SiteCode` = '".substr($persenResult['persenID'],0 , -5)."'") or die (mysql_error());
 						$siteResult = mysql_fetch_array($sel_site);
 
-						$sel_sitetype = mysql_query("SELECT * FROM sitetype WHERE `SiteTypeID` = '".substr($siteDrawResult['persenID'],-5 , 20)."'") or die (mysql_error());
+						$sel_sitetype = mysql_query("SELECT * FROM sitetype WHERE `SiteTypeID` = '".substr($persenResult['persenID'],-5 , 20)."'") or die (mysql_error());
 						$sitetypeResult = mysql_fetch_array($sel_sitetype);
 
 						$sel_emp = mysql_query("SELECT * FROM employee WHERE `EmID` = '".$siteResult["EmID"]."'") or die (mysql_error());
 						$empResult = mysql_fetch_array($sel_emp);
 
- 				echo $siteResult["SiteCode"] ; ?>
+ 				echo substr($persenResult['persenID'],0 , -5); ?>
 				</td>
-				<td><?php echo $siteResult["SiteName"] ; ?></td>
-				<td><?php echo $sitetypeResult["SiteTypeName"] ; ?></td>
-				<td><?php echo $empResult["EmName"] ; ?></td>
-  			</tr>
+				<td><?php echo $siteResult['SiteName'] ; ?></td>
+				<td><?php echo $sitetypeResult['SiteTypeName']; ?></td>
+				<td><?php echo $empResult['EmName']; ?></td>
+  	</tr>
 <?php
           }
 }
