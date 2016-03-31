@@ -88,6 +88,10 @@ function OpenPopup(intLine)
  	 {
    		window.open('getDataPartners.php','myPopup','width=650,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
   	}
+  	function OpenPopup4()
+ 	 {
+   		window.open('getDatapoIn.php','myPopup','width=650,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
+  	}
 </script>
 
 <style type="text/css">  
@@ -130,7 +134,8 @@ function OpenPopup(intLine)
         </tr>
         <tr>
           <td>เลขที่ PO</td>
-          <td colspan="3"><input type="text" name="txtpoID" value="" /></td>
+          <td colspan="3"><input type="text" name="txtpoID" id="txtpoID" value="" />
+           <INPUT TYPE="BUTTON" NAME="btnPopup_1"  ID="btnPopup_0" VALUE="..." OnClick="OpenPopup4()"></td>
         </tr>
         <tr>
           <td>วันที่</td>

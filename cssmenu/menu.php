@@ -62,7 +62,9 @@
    <li class='has-sub'><a href='#'><span>วางบิล</span></a>
       <ul>
          <li class='has-sub'><a href='#'><span>วางบิล</span></a>
-		 	<ul>
+         	<ul>
+		 		<li class='last'><a href='poinadd.php'><span>เพิ่มใบ PO รับเข้า</span></a></li>
+				<li class='last'><a href='poinedit.php'><span>รายงาน PO รับเข้า</span></a></li>
 		 		<li class='last'><a href='poadd.php'><span>เพิ่มใบวางบิล</span></a></li>
 				<li class='last'><a href='poedit.php'><span>รายงานการวางบิล</span></a></li>
 			</ul>

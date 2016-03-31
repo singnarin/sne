@@ -65,12 +65,14 @@ while($objResult = mysql_fetch_array($objQuery))
 {
 	  	$sel_partners = mysql_query("SELECT * FROM partners WHERE `PartnersID` = '".$objResult["PartnersID"]."'") or die (mysql_error());
     	$partnersResult = mysql_fetch_array($sel_partners);
-            $sel_persen = mysql_query("SELECT * FROM persen WHERE `po` = '".$objResult["poID"]."'") or die (mysql_error());
-            $num = mysql_num_rows($sel_persen) +1;
+        	$sel_persen = mysql_query("SELECT * FROM persen WHERE `po` = '".$objResult["poNo"]."'") or die (mysql_error());
+        	$num = mysql_num_rows($sel_persen) +1;
+        	$numSite = $num - 1 ;
 ?>
   			<tr>
-          	 <td rowspan="<?php echo $num; ?>"><a href="podel.php?poID=<?php echo $objResult["poID"];?>" target = "_blank"><img src = "images/no.jpg"></a></td>
-    			   <td rowspan="<?php echo $num; ?>"><div align="center"><?php echo $objResult["poID"];?> </td>
+          	 <td rowspan="<?php echo $num; ?>"><a href="podel.php?poID=<?php echo $objResult["poID"];?>&numSite=<?php echo $numSite;?>&poNo=<?php echo $objResult['poNo'];?>" target = "_blank"><img src = "images/no.jpg"></a></td>
+    			   <td rowspan="<?php echo $num; ?>"><div align="center"><?php 
+    			   echo $objResult["poID"];?> </td>
           	 <td rowspan="<?php echo $num; ?>">
     			<?php 
     				$date2 = explode("-",$objResult["poDate"]);
