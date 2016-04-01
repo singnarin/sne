@@ -47,6 +47,7 @@ $objQuery = mysql_query("SELECT * FROM po_in WHERE `poDateIn` BETWEEN '".$nbegin
     			<th> <div align="center">วันที่รับ</div></th>
          		<th> <div align="center">ราคาไซต์</div></th>
          		<th> <div align="center">ใบสั่งซื้อราคา</div></th>
+         		<th> <div align="center">ประเภทไซต์</div></th>
     			<th> <div align="center">หมายเหตุ</div></th>
          		<th> <div align="center">รหัสคู่ค้า</div></th>
          		<th> <div align="center">ชื่อคู่ค้า</div></th>
@@ -54,7 +55,6 @@ $objQuery = mysql_query("SELECT * FROM po_in WHERE `poDateIn` BETWEEN '".$nbegin
          		<th> <div align="center">ยอดวางบิล</div></th>
             	<th> <div align="center">VAT 7%</div></th>
          		<th> <div align="center">ยอดรวม</div></th> 
-         		<th> <div align="center">ประเภทไซต์</div></th>
          	</tr>
 <?php
 while($objResult = mysql_fetch_array($objQuery))
@@ -77,6 +77,7 @@ while($objResult = mysql_fetch_array($objQuery))
           		</td>
     			<td rowspan="<?php echo $num; ?>"><?php echo $objResult["priceSite"] ; ?></td>
     			<td rowspan="<?php echo $num; ?>"><?php echo $objResult["priceOrder"] ; ?></td>
+    			<td rowspan="<?php echo $num; ?>"><?php echo $objResult["SiteTypeID"] ; ?></td>
           		<td rowspan="<?php echo $num; ?>"><?php echo $objResult["poInNote"] ; ?></td>
 <?php
           	while($poResult = mysql_fetch_array($sel_po)){
@@ -91,7 +92,6 @@ while($objResult = mysql_fetch_array($objQuery))
           		<td><?php echo $poResult["po"] ; ?></td>
     			<td><?php echo $vat7 ; ?></td>
           		<td><?php echo $sumpovat ; ?></td>
-    			<td><?php echo "ประเภทไซต์";?></td>
   	</tr>
 <?php
           }

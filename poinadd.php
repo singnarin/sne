@@ -16,6 +16,7 @@ include("include/calenda.php");
 	{
 		window.open('getDataSiteType.php','myPopup','width=650,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
 	}
+
 </script>
 
 <style type="text/css">  
@@ -64,6 +65,23 @@ include("include/calenda.php");
           <td>วันที่</td>
           <td colspan="3"><input name="dateInput" type="text" id="dateInput" value="" readonly="readonly" >
                           <?php  include ("include/calendaScript.php"); ?></td>
+        </tr>
+        <tr>
+          <td>ประเภทไซต์</td>
+          <td colspan="3"><select id="txtSiteTypeID" name="txtSiteTypeID" onChange="" >
+		    <option  value="">- กรุณาเลือก -</option>
+<?php
+$query_list=mysql_query("Select * From sitetype order by SiteTypeID");
+while($sl < mysql_num_rows($query_list)){
+$arrL= mysql_fetch_array($query_list);
+?>
+              <option value="<?php echo $arrL['SiteTypeID'];?>"><?php echo $arrL['SiteTypeName'];?></option>
+<?php
+$sl++;
+}
+?>
+          </select>
+          </td>
         </tr>
         <tr>
           <td>จำนวนไซต์</td>

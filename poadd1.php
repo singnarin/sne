@@ -89,6 +89,16 @@ if ($numCheck > 0) {
 	echo "<meta http-equiv='refresh' content='0;URL=poadd.php'>";
 }else{
 	mysql_query("UPDATE `persen` SET `po` = '', `Matt` = '', `Service` = '' WHERE `po` = '".$poNo."'") or die(mysql_error());
+
+	$sel_poIn = mysql_query("SELECT * FROM `po_in` WHERE `poID` = '".$poID."'");
+	$poInResult = mysql_fetch_array($sel_poIn) or die (mysql_error());
+	$numSite =  $_POST["hdnMaxLine"] - $sel_poIn['numSite'];
+	 if ($sel_poIn['numSite'] >= $numSite) {
+		mysql_query("UPDATE `po_in` SET `numSite` = '".$sel_poIn['numSite']."'  WHERE poID = '".$poID."'") or die(mysql_error());
+	}else{
+		mysql_query("UPDATE `po_in` SET `numSite` = '0'  WHERE poID = '".$poID."'") or die(mysql_error());
+	}
+
 	echo "<meta http-equiv='refresh' content='0;URL=poadd.php'>";
 }
 }else{
